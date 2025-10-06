@@ -1,0 +1,188 @@
+
+MongoDB (Pro Academy)
+---------------------
+No SQL
+Non relational
+Collection
+Document
+Each document will be having a _id key in it and no two documents can have same _id in the same collection.
+BSON - Binary JSON
+The mongoDB stores data in the form of BSON which is similar to JSON but supports more data types than JSON.
+Data inconsistency should be handled properly that is a document of a collection can be inserted in another collection.
+Before storing the data mongoDB converts the BSON data to binary which is why querying is faster in mongoDB.
+
+MongoDB Commands
+-----------------
+show dbs : To list all databases
+show collections
+db 
+use 'DatabaseName'
+db.collectionName.drop()
+db.dropDatabase()
+db.createCollection("collectionName")
+db.createCollection("collectionName", {capped: boolean, max: number(Bytes), size: number, autoIndexId: boolean})
+db.collectionName.insertOne({data})
+db.collectionName.insertMany([{data}, {data}, {data}])
+db.collectionName.find()
+db.collectionName.find(filterCriteria, projectionCriteria) Eg : db.collectionName.find({age: 40}, {gender:true})
+db.collectionName.findOne()
+db.collectionName.findOne(filterCriteria, projectionCriteria) Eg : db.collectionName.findOne({age: 40}, {gender:true})
+projection criteria specifies which all fields to be inclueded in the result we can set the value true or 1 to include the specified field and false or 0 if we dont want the specified field.
+db.collectionName.updateOne(filterCriteria, {$set: {fieldName : value}}) This will act as PATCH request
+db.collectionName.updateMany(filterCriteria, {$set: {fieldName : value}}) This will act as PATCH request
+db.collectionName.replaceOne(filterCriteria, {fieldName : value}) This will replace the whole document expect the _id with the second argument work same as PUT request
+db.collectionName.deleteOne(filterCriteria) Atleast we should pass empty object as an argument
+db.collectionName.deleteMany(filterCriteria) Atleast we should pass empty object as an argument
+Cursor in mongoDB
+db.collectionName.find() this method retruns a cursor we can bind methods like toArray(), forEach(), pretty() in case of find method cause it returns us a cursor.
+BSON Datatypes: Array, string, Date(ISO Date, timestamp), Number(int32, int62, double, decimal), javascript code, binary(images, files), objectId, boolean, Regular exp, embedded document or known as objects.
+Maximum size allowed for a single document in collection is 16MB.
+
+Notes
+---------
+
+Array : 
+
+In filter criteria if we want to access a key of an object using dot notation we need to wrap it within " ".
+Inorder to add filter criteria in case of an array we can use various dot notation to access the key of an object with " " also we can use various operators such as $in, $nin (not in) and $all.
+
+Embedded documents : 
+About 100 nested documents are allowed but the outer document should not exceed 16MB
+
+To establish a relationship between two documents we can use  either embedded document approach(Nested Object) or we can use referencing approach(Using Array datatype).
+Type of relations : one to one(Embedded) , one to many(Both), many to many(Referencing).
+one to many : (few(Embedded), many(Both), too many(Referencing))
+
+Examples for relations:
+one to one : product --> media
+one to few : customer --> cards
+one to many : customer --> shipping address
+one to too many: product --> review
+many to many : movie --> actors
+
+Types of referencing: child referencing(one to one, one to few), parent referencing(one to many, one to too many) and two way referening(many to many).
+child referencing: Parent will be storing the objectId of its children
+parent referencing: Child will be storing the objectId of its parent
+Two way referencing: Both will be done on the same time.
+
+Key point: When storing an array we shouldn't allow the array to grow indefintly
+
+We can set schema while creating a collection using options object keywords used: validator, $jsonschema, bsonType, properties, additonalProperties, required.
+Eg: db.createCollection('collectionName', {validator: {
+	$jsonSchema: {
+	bsonType: 'object',
+	additionalProperties: false,
+	required: ['name', 'gender', 'address'],
+	properties: {
+	name:
+	  { 
+	bsonType: 'string'
+	  },
+	  gender: {
+	  bsonType: 'string'
+	  },
+	  address: {
+	  bsonType: 'object'
+	  properties: {
+	  	city: {
+	  	bsonType: 'string'
+	  	},
+	  	State: {
+	  	bsonType: 'string'
+	  	}
+	  }
+	  }
+	 }
+	}
+}})
+we can edit the schema of an existing collection using db.runCommand({
+	collmod: 'collectionName',
+	validator: {},
+	validationLevel: 'strict' | 'moderate',
+	validationAction : 'error' | 'warn' 
+})
+By default ordered insertion is done in case of insertMany([{}, {}, {}], {ordered: true}). IF any error occured that document as well as the remaining documents will not get inserted
+In case unordered insertion the error document will only get rejected other documents will get inserted.
+writeConcerns are used in case of insert, update and delete operations in mongoDB. {writeConcerns: {
+	w: 'majority',
+	journal: true,
+	wTimeout: 400000
+}}
+wTimeout is mentioned in millisecond and bydefault the journal is set to undefined.
+Client --> Server(Replica set) --> StorageEngine(RAM, Journal(Optional), Disk).
+Atomicity in mongoDB it means that no partial insertion, deletion or updation takesplace either the transaction will be completed or do not takeplace.
+Also atomicity takesplace in document level not in the whole data level.
+Import documents to a collection using a JSON file : first download the database-tool from browser then add the path to env variable then use the monogoimport tool to import the data from the JSON file.
+
+Read Operators
+------------------
+Comparison operator: $gte $gt $lt $lte $eq $ne $in $nin
+Logical operators : $and $nor $or $not
+Element operators : $exists $type(instead of using boolean we use bool)
+Evaluation operator : $regex $exp $mod
+Array operator : $all $size $elemMatch
+Cursor next method and forEach method sort method skip method limit method (If limit, skip and sort method is called in a chain manner then first the sort method then skip method then limit method will be called).
+For Ascending : 1
+For Descending : -1
+Projection operators : $ operator $elemMatch $slice
+update operator : $set
+increment operator : $inc db.collectionName.find({}, {$inc : {key: incrementValue}})
+$min $max $mul
+$unset : This operator is used to drop a key from a document db.collectionName.updateOne({}, {$unset: {key: ''}})
+$rename : This operator is used to rename a key of a documnent db.collectionName.updateOne({}, {$rename: {key: 'newKey'}})
+$ operator can be only used to finding or update anything on the first matching item on an array. To access or update every element in an array we need to use $[] operator.
+$[el] to access or update the matching elements 
+$push(allows duplicates) $addToSet(Dont allow duplicates) both these are used to add elements to array
+$pull $pop both these are used to remove elements from an array
+Indexscan and collectionscan
+Indexing is done on those field whose query will return only 10 or 20 percent of total docs in the collection.
+Index is good for both find query as well as sort query
+Compound index
+unique index
+Partial Index (partialFilterExpression)
+Partial Index is having more performance when compared to compound Index
+Time to Live index (expiryAfterSeconds) this index can be applied on date field and compound indexing is not possible in case of Time to live index.
+Covered queries : In these types of queries it is covered in the index itself. These are most efficient.
+Winning plan and Rejected plan
+Multi key index (Index on fields that stores array). In a compound index a single multi key can be specified.
+Text index : You can only have one text index in a collection it is pretty expensive we should limit its usage.
+Combined text index
+Configuring text index
+We can create a index both in foreground as well as in background. By default it is created in foreground but its blocking in nature
+GeoJson
+$near
+$geoWithin
+$geometry
+Agrregation pipeline
+In aggregation pipeline we can use same stage operators multiple times. Always use the filtering operation as the first stage because it can make use of the indexing of the collection and make the query faster. only the first stage is applied on all documents of a collection all other stage operators are applied on the result from the previous stage.
+string operators: $concat $toUpper $substrCP $subtract $subLenCP $toLower
+$convert
+$unWind
+$slice
+$group : Used when we want to group the documents based on value of one field
+$bucket : Used when we want to group the document based on different value boundaries of a single field
+$out
+$geoNear: If we are using this stage in our aggregation framework then it should be the first stage so that it can use the geo index of our collection
+$count
+$addFields
+Number
+----------
+Integer(int32) Long(int64) Double(int64) Decimal(int128)
+NumberInt, NumberLong
+when the number stored in db is either integer or long then the arithemetic operation should be done using these number datatypes otherwise the value will be converted to double datatype which is not that accurate to store integer type number.
+db.createUser({user:'', pwd:'', roles: [{role:'', db: ''}]})
+db.auth('username', 'password')
+db.updateUser('username', roles: [{role:'', db: ''},{role:'', db: ''}])
+db.createRole(
+{
+	role:
+	privillages:
+	roles:
+})
+db.logout()
+
+Example for roles: readWrite, readWriteAnyDatabase
+SSL TLS encryption in mongoDB to pass the data from client to mongoDB server in encrypted manner. It ensures data passed is un readable from external parties
+Encryption at REST(Protects the data stored in the DB)
+
+

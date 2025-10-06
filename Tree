@@ -1,0 +1,58 @@
+class Treenode:
+    def __init__(self, name, designation):
+        self.parent= None
+        self.name = name
+        self.designation = designation
+        self.children = []
+        
+    def add_child(self, node):
+        node.parent = self
+        self.children.append(node)
+        
+    def print_tree(self, filter=None):
+        space = " " * self.get_level() * 4 
+        indent = space + "|__" if self.get_level() != 0 else ""
+        if filter == 'name':
+            out = indent  + self.name
+        elif filter == 'designation':
+            out = indent + '('+ self.designation +")"
+        else:
+            out = indent + self.name + ' ('+ self.designation +")"
+        if self.get_level() <= filter:
+            print(out)
+        for child in self.children:
+            child.print_tree(filter)
+        
+    def get_level(self):
+        level=0
+        itr = self
+        while itr.parent:
+            level += 1
+            itr = itr.parent
+        return level
+
+        
+nilupul = Treenode("Nilupul", "CEO")
+chinmay = Treenode("Chinmay", "CTO")
+vishwa = Treenode("Vishwa", "INFRASTRUCTURE HEAD")
+dhaval = Treenode("dhaval", "CLOUD MANAGER")
+abhijith = Treenode("Abhijith", "APP MANAGER")
+amir = Treenode("AMmir", "APPLICATION HEAD")
+gels = Treenode("Gels", "HR HEAD")
+peter = Treenode("Peter", "REQUIRMENT MANAGER")
+waqas = Treenode("Waqas", "POLICY MANAGER")
+
+nilupul.add_child(chinmay)
+nilupul.add_child(gels)
+
+chinmay.add_child(vishwa)
+chinmay.add_child(amir)
+
+
+gels.add_child(peter)
+gels.add_child(waqas)
+
+vishwa.add_child(dhaval)
+vishwa.add_child(abhijith)
+
+nilupul.print_tree(0)

@@ -1,0 +1,27 @@
+Merge Sort
+arr_one = [1,30,50, 90]
+arr_two = [2,10,35,60,100]
+
+def merge_sort(arr_one, arr_two):
+    sorted_array =[]
+    i = j = 0
+    lena = len(arr_one)
+    lenb = len(arr_two)
+    while i < lena and j < lenb:
+        if arr_one[i] <= arr_two[j]:
+            sorted_array.append(arr_one[i])
+            i+=1
+        else:
+            sorted_array.append(arr_two[j])
+            j+=1
+    while i< lena:
+        sorted_array.append(arr_one[i])
+        i+=1    
+    while j < lenb:
+        sorted_array.append(arr_two[j])
+        j+=1
+    return sorted_array
+
+    
+print(merge_sort(
+    arr_one, arr_two))

@@ -1,0 +1,18 @@
+Cassandra 
+--------------
+
+Keyspace: Like a database, contains tables
+Table:	Contains rows, each row is made of columns
+Partition Key: Determines which node stores the row and groups data in a partition
+Clustering Key:	Determines how data is sorted within the partition
+Same Partition Key Stored on the same node (same partition)
+Same Clustering Key	Not grouped together unless partition key is also the same
+Inside a partiion the clustering keys are unique
+Primary Key	Combination of partition key and clustering key(s)
+Clustering keys are optional partition keys are must.
+Datas are stored in the same node according to the partition key
+Row = Identified uniquely by the Primary Key.
+Primary Key = Partition Key + (optional) Clustering Key(s).
+Partition Key → Decides which node stores the row.
+Clustering Key → Orders rows inside a partition.
+By default local cassandra run on : localhost:9042

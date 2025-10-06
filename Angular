@@ -1,0 +1,115 @@
+Install node
+npm install -g angular/cli@latest (For latest version) npm install -g angular/cli@14 (For version 14)
+ng new project-name (For creating an angular project)
+ng serve (For compiling an angular project)
+When a component get initialized, first its constructor gets called and at that time all the component variables except the the variables decorated with @input() decorator will be initialized. Also the projected contents also will not be available so the variables decorated with @contentChild() and @contentChildren() will not be available. Also the child components also will not be available at the time when constructor runs.
+Life cycle hooks are present in framework like: angular and react they are not available in plain js. On the other hand constructor is a method of a class  and this is also availble in plain js.
+All the life cycle hooks starts after finishing the running of the constructor. So inshort when a component is rendered in the DOM first the constructor gets called after finishing the life cycle hooks starts. When the component is removed from the DOM the ngOnDestroy life cycle hook gets executed.
+ngOnChanges life cycle hook runs whenever a input variable value changes, something changes in the DOM, when an http request is sent and when certain events are triggered like change or click events.
+The value of variable created using @viewChild() is available in the ngOnInit life cycle hook.
+The value of variable created using @viewChildren, @contentChild() and @contentChildren is available in the ngOnChanges life cycle hook.
+Change detection cycle is the mechanism by which angular keeps component file and view template in sync. These gets executed when: 1. Input property changes 2. Somethings gets added or removed from the DOM 3. When an HTTP request is sent 4. When some events like click or change event happens.(CHAI)
+ngOnChanges gets executed when the component loads and the value is assigned to the input variable for the first time. It will also gets executed when the value of these input property gets updated.
+So in fact when a component get loaded first the constructor gets executed at that time everything including the input decorated variables will be undefined then all the input decorated varibles gets initialized and then the ngOnChanges hook gets executed as the value of input decorated variables gets changed from undefined after that the ngOnInit hook gets executed but at this time also input decorated variables are having value but neither the view nor the child component will not be accessible at this time. After this ngOnChanges will get executed whenever the value of input variables changes but the ngOnInit will not be called it will be executed only once.
+Array and objects are secondary datatypes and if we assign them to a variable only the reference of these datatypes will get assigned to these variables.
+ngDoCheck is called after ngOnInit and this can be triggered many times not like ngOnInit and this is triggered whenever the angular change detection cycle runs(CHAI)
+ngAfterContentInit is called after ngDocheck and this is called only on the first change detection cycle after the projected contents are initialized. At this point of time all the @Input variables @ContentChild, @ContentChildren variables are initialized.
+ngAfterContentChecked is called on every change detection cycle but if there is any changed is projected content are we are using @ContentChild, @ContentChildren then this life cycle hook only runs after these variables are initialized.
+ngAfterContentChecked and ngAfterContentInit will be called on the first change detection cycle even if there is no projected contents.
+The ngOnDestroy is called just before the component is removed from the Dom. Here we can write the cleanup logic for our component such as unsubscribing to the observable, removing eventHandler etc..
+All of these life cycle hooks are available for a component but ngAfterContentInit, ngAfterContentChecked, ngAfterViewInit, ngAfterViewChecked are not available for directives.
+Also ngAfterContentChecked, ngAfterViewChecked and ngDoCheck gets executed for every change detection cycle but if there is any change in projected contents the lastest value will be available for ngAfterContentChecked ie, @ContentChild and @ContentChildern variables. Also if there any change to the view of the component or child component then the latest changes will be available in ngAfterViewChecked ie, @ViewChild and @ViewChildren variables. These latest values will not be available in ngDoCheck.
+All the life cycle hooks of child component will be completed before executing the ngAfterViewInit in the parent component.
+ALl the life cycle hooks ending with Init will only be called once which is the first change detection cycle.
+-------------------------------------------------------------------------------------
+In Summary:
+First the constructor runs at this time only the component variables are available no Input variables, ViewChild, ViewChildren, ContentChild and ContentChildren variables will not be available.
+Then the @Input variable will be available for ngOnchanges, ngOnInit and ngDoCheck
+Then the projected contents, @ContentChild and @ContentChildren will be available for ngAfterContentInit and ngAfterContentChecked
+Then all the view template of the current and child components including the @ViewChild and @ViewChildren variables are available before ngAfterViewInit and ngAfterViewChecked. Also all the life cycle hooks for child component will be compeleted before the executing of ngAfterViewInit.
+-------------------------------------------------------------------------------------
+Input elements in HTML has a special event named focus which will get executed when a user click on the input element.
+At last the ngOnDestroy is executed before it the component is removed from the DOM.
+Also ngAfterContentInit ngAfterContentCheck ngAfterViewInit ngAfterViewChecked these life cycle hooks are only available for components they are not available for directives.
+When defining a parameter for constructor if we mention the keyword private or public infront of the parameter name then a private or public variable will be created for the class and the value which we pass during class initialization will be assigned to that variable. But if we dont use these keywords then it will be treated as a normal parameter of the constructor.
+Custom property binding and custom conditional property binding in directives
+@HostBinding() to bind variables from component file of directive to any attribute of the host element and @HostListner to bind some function from component file of the directive to events in the host element in directives
+Custom attribute directive and how to apply it conditionally 
+Custom class directive 
+Custom style directive
+Custom structural directive (Like ngIf and ngSwitch)
+View Encapsulation: Limiting css to the component itself and not passing it to the child components 
+Serices in angular.
+Dependency Injection.
+Hierarchical Dependency Injection that means service can be provided in the root file or the module file and can be injected to any of the component or services.
+Dependency injection can be done either using the constructor or using the inject function which is provided by @angular/core
+Injection token (Need to study once again)
+How we can use services to communicate between two unknown components by using event emitter in once component and emiting it to service file instance and using the subscribe on the other component to get the data transfered to that component.
+By default an eventemitter emits an observable which can be subscribed. Whenever the event is emitted the subscribed components gets notified and the callback inside the subscribe function gets executed.
+By default a fetch method returns a promise and we need to apply the json function on the returned object to convert the response to a json response.
+By default a http request in angular returns an observable and in order to get the data we need to subscribe to it.
+By default an async function also returns a promise and we can use await keyword before calling this function so that the next line will only gets executed after finishing the execution of the async function.
+By default a js code gets executed synchronousily that means line by line and the code execution will only go to the next line after completing the current line. But incase of asynchronous functions the code execution is done in a multi threaded manner that means when the js compiler sees a async function execution it suddenly triggers the next line in a diffrerent thread and so the async function will be executed, at the same time remaining code of the function will also be executed. The await keyword waits for the promise to get resolved before continuing to the next line.
+Async function munil await use cheythal aa line complete ayite adutha line pokulu. Alland oru async function vilichal multi threaded ayit next linilot pokum wait cheyathila. Pinne .then().catch() use cheythalum next linilot multi threaded ayit pokum but aa promise resolve ayitite .then() akath olla aa code execute avulu. 
+.then() venel async function alle promise avide use cheyam but await keyword async function akath mathre use cheyan pattulu.
+Observable vs promise 
+Observable is imported from rxjs and also we have 2 functions which will generate observable that is 1. of operator 2. from operator
+other operators are fromEvent operator, map operator, filter operator and pipe operator.
+Subjects in Rxjs.
+A combination of service and event emitter can be used for communication between two unrelated components.
+Subjects are special type of observable it can be stored in a variable and can emit data using the next method as we do in observer inside the call back function of a new Observable() function.
+Subjects are multicast(As no:of subscribers increase API calls will not increase) on the other hand Observables are unicast(As no:of subscribers increase no:of API calls will also increase).
+Subjects can produce as well as consume data on the other hand Observables can only produce data.
+Consuming data by Subjects example:
+	const sub = new Subject(); 
+	obs.subscribe(sub);
+	In this case the values emitted will be received by the Subject and it will be emitted by the Subject so we can subscribe to subject instance to access the data recieved from observable.
+We are manually emit using next function in case of SUbjects which is not possible in case of Observables. The values mentioned in the observable constructor will only gets emitted on subscribing to an observable.
+Before using map and filter operator in observable we need to wrap these operators inside a pipe function.
+For each subscription the call back function inside the observable function will get executed and we cannot make sure that each subscribers will recieve the same data in case of an Observable.(for eg: Incase of Math.random() each subscriber will get completely different random numbers), same case if we use object for every subscription the observable will be executed only if it is consumed by an Subject and we are subscribing to the Subject instance.
+BehaviorSubject this can be used if the subscribers are to be intialised with a value if nothing is emitted from this subject or emit the last value emiited by this subject
+Replay Subject stores the emitted values in a buffer and pass all the emitted values to the new subscriber by default. We can use BufferSize and WindowTime to control the number of last values and the time for which the values are stored in the buffer.
+Async Subject 
+Routing
+Wild card routes
+routerLink in a tag of html
+routerLinkActive (This will be applied to the parent routes also if this is the route http://localhost:4200/fleet then http://localhost:4200/ will be also be highlighted by default unless we set the routerLinkActiveOption to the parent route)
+routerLinkActiveOption
+Absolute(Slash in the beginning) and relative route path
+Router (this.router.navigate())
+ActivatedRoute
+snapshot
+queryParams
+Route params are required and query params are optional We can hit the same route without passing any query params.
+scrollIntoView method is used along with fragment to scroll to a particular portion of the webpage on clicking a button or a portion of the page.
+canActivate
+canActivateChild
+Passing static (Using data property) and dynamic (Using state directive) data with a route.
+pipes in angular.
+chaining of pipe.
+Creating Custom pipes 
+By default every pipes are pure pipe but these are not suitable with filtering and sorting especially in case of secondary datatypes. They will only gets called when the reference of the input value of the pipe changes in case of secondary data type.
+Incase of primary data type they will get called when the input value of the pipe changes.
+observe response and response type
+HTTP Interceptors
+canActivate Route guard
+token authentication
+modules
+Each module work independently, we cannot use component of one module in other module.
+All application atleast require a module unless they are using standalone components.
+Feature module(We can group the directives, pipes and components relating to a particular feature together by creating a feature module).
+Core Module(All the things that are used by the entire application are mentioned here like services and this is imported only once in the entire application which is in the app.module).
+Routing in a feature module(This is done using RouterModule.forChild()).
+Exports in module(Service files shouldn't be mentioned in the exports of the module).
+Lazy loaded module can be implemented in app-routing.module.ts in here we can also set lazyLoadingStrategy.
+Components, directive and pipes should be declared only once in angular application and these are only avilable in that module unless we export these and import the module in another module.
+Incase of service if we are providing the service in appModule, eager loaded module or using the providedIn property then it will be available globally( Entire angular application ), if we provide the same in a components providers array then it will be available for that component and child components. If we provide the service in a lazy loaded module then it will be available only on that module.
+All the modules should be either imported in the appModule or it should be imported in another module which is being imported in the appModule.
+If we want to give access of a component which is inside a feature module to another module then the component should be exported and the module should be imported where the component is needed.
+By default the ng serve command rebuilds and reloads our application when there is a change in the source folder. This command save the application data in memory not in disk.
+Signals in angular.
+Computed(Like map in array operations) and effect(To run some code when the value of the signal mentioned changes) function in angular signals.
+Standalone components
+If we want to use a standalone component in another standalone component then we need to add the component in the import array of the parent component where it is used. On the other hand if we want to use a standalone component in a standard component then the standalone component should be declared in the imports array of the app module instead of declaring it in the declarations array of app module.
+To setup routing in standalone angular project without router-module.ts we can define all the routes in a file and provide it in the provideRouter property where we bootstrap the AppComponent.
+Incase of a standalone application all the dependencies should be imported before using it in our component.

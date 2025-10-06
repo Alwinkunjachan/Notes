@@ -1,0 +1,53 @@
+from collections import deque
+import time
+import threading
+
+class Queue:
+    
+    def __init__(self):
+        self.queue = deque()
+        
+    def push(self, value):
+        print("push", value)
+        self.queue.appendleft(value)
+    
+    def pop(self):
+        removed = self.queue.pop()
+        print("pop",removed )
+        return removed
+    
+    def is_empty(self):
+        return len(self.queue) == 0
+        
+    def size(self):
+        return len(self.queue)
+    
+    def peek(self):
+        return self.queue[-1]
+        
+food_order_queue = Queue()
+def serve_food():
+    time.sleep(1)
+    while not food_order_queue.is_empty():
+        food_order_queue.pop()
+        time.sleep(2)
+def order_food(order_list):
+    for odr in order_list:
+        food_order_queue.push(odr)
+        time.sleep(0.5)
+orders = ['pizza','samosa','pasta','biryani','burger']
+t1 = threading.Thread(target = order_food,args=(orders,))
+t2 = threading.Thread(target = serve_food)
+t1.start()
+t2.start()
+
+def print_binary(n):
+    queue = Queue()
+    queue.push('1')
+    for i in range(n):
+        front = queue.peek()
+        print(front)
+        queue.push(front + '0')
+        queue.push(front + '1')
+        queue.pop()
+print_binary(10)

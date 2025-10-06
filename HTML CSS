@@ -1,0 +1,51 @@
+Hover transition shadow
+Specificity 1. inline style 2. id selector 3. Class selector(hover selector) 4. element(Other pseudo selectors) overriding logic only applies if the specificity for both the selectors are the same
+By default every button in same row aligns on the basis of text instead we need to set the vertical-align: top; So it will get aligned based on top of the button.
+text-align: center
+Html entities: for loading special symbols using html
+Inside paragraph we can add a element called span element to style a particular portion of the paragraph. We can also add class to these span elements. These span elements dont have any default styles but on the other hand <strong> and <u> tags comes with default styles
+text-decoration: underline
+Generally script tags are placed on bottom of the body tag, these script tags are used to load the javascript to our webpage.
+Generally to have the correct aspect ratio for the image we provide only width or height not both at the same time so the image will adjust accordingily. But if we specify both then we should use object-fit and object-position properties to position the image correctly.
+Block element takes up entire width of their container
+Inline element doesnot have width and height properties example a span element inside a paragraph element
+An inline-block element takes up the width of its content and have both height and width properties and these elements get rendered at the same line like a inline element.
+For a block or inline-block element if we specify the width then additional content will be moved to next line
+The default white background of a svg image can be removed by using css: background-color: transparent here we need to traget the img tag instead of the container.
+Nested layout technique : This is a combination of horizontal and vertical layouts. In this we are creating the vertical layout using the block level elements and horizontal layout using the inline or inline-block elements
+By deafult the images overflows if its container is very small so we need to set the width of the image to 100% so that it takes the entire width of the container. We need to adjust either width or height of a img tag not both also we need to specify the width of the container.
+For inline elements mostly it will be having vertical-align set to text but we should change the same to top
+when we provide the font family we usually provide more than 1 fonts so that if one font get failed the other font family will get applied.
+max-width property
+flex: 1
+In flex we can place gap for a particular child element by directly specifying in css of the child element.
+grid-template-columns: 1fr 1fr
+Position static is the default position
+If when using flex: 1 in child element if there is a default width then we need to set width: 0 first otherwise the element will maintain the minimum width.
+The default value for flex-shrink is 1 that is whenever there is limitation in width this elements width gets reduced.
+The default value of position is static.
+Even a block level element will be converted to inline-block element if the element is direct child of a flex-box container or assign position property such as absolute or fixed but incase of relative the block level element remain block level without any changes.
+For position: relative no changes will be done to the element but if we provide left right top or bottom property the element will move from its normal position.
+When we are using relative, absolute or fixed the element which comes 2nd will be rendered on top of the other, to control which should be shown on top we can provide z-index value by default its value is 0.
+There is a css property named pointer-events: none major pointer events are hover mouse click and mouse double click so if we apply this property then those pointer event have no effect on the element.
+If some text is limited by width of a container then we can display it in a straight line by applying the css white-spaces: nowrap;
+We can use media queries in align with flex box or css grid to make a responsive design the max width for mobile will be 600px for tablet the width will be from 601px to 900px the syntax of media queries using width is:
+@media screen and (max-width: 600px){
+	
+}
+@media screen and (min-width: 601px) and (max-width: 900px){
+	
+}
+Inside the curly bracket we should type css selector and apply the style usually we change any global styles inside the media queries for example in angular we can apply the media queries for the styles in style.css file which is a common css file.
+Usually we design for desktop and add media queries for mobile and tablet view thats how we make the website responsive for all mobile tablet and desktop view.
+Semantic elements : header, nav, main, section.
+Certain css properties like font-family, font-siz, text-decoration etc.. gets inherited from parent element to child element. If we want to apply specific styles and dont want to get the inherited style then we can always override the properties using a selector with more specificity.
+The div on which we add flex-container class doesn't gets converted to inline-block but the flex-items div gets converted to inline-block element
+grid-template-columns (container)
+grid-template-rows (container)
+grid-auto-rows (container)
+repeat(3, 1fr) (values)
+minmax(100px, auto) (values)
+align-self, justify-self are applied on item not the container
+selector:nth-of-type(2)
+spanning in grid can be done by using the property grid-column: 1/3 grid-row: 2/4 on the item not the container these numbers are given by the numbers we see in the inspect mode.

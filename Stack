@@ -1,0 +1,54 @@
+from collections import deque
+class Stack:
+    
+    def __init__(self):
+        self.stack = deque()
+        
+    def push(self, value):
+        return self.stack.append(value)
+        
+    def pop(self):
+        return self.stack.pop()
+        
+    def is_empty(self):
+        return len(self.stack) == 0
+        
+    def length(self):
+        return len(self.stack)
+    
+    def peek(self):
+        return self.stack[-1]
+        
+    def reverse_string(self, string):
+        stack = Stack()
+        for i in string:
+            stack.push(i)
+        res = ""
+        for i in range(stack.length()):
+            res += stack.pop()
+        return res
+
+    def is_match(self, ch1, ch2):
+        match_object = {
+        ')': '(',
+        ']': '[',
+        '}': '{'
+        }
+        return match_object[ch1] == ch2
+
+    def is_balanced(self, string):
+        stack = Stack()
+        for char in string:
+            if(char == '(' or char == "{" or char =="["):
+                stack.push(char)
+            if(char == ')' or char == "}" or char =="]"):
+                if stack.length() == 0:
+                    return False
+                if  not self.is_match(char,stack.pop()):
+                    return False
+        return stack.length() == 0
+
+
+instance = Stack()
+print(instance.is_balanced("(H)am Alwin"))
+print("Alwin")

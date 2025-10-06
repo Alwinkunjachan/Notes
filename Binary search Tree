@@ -1,0 +1,95 @@
+class BSTNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, value):
+        # Standard iterative insert
+        new_node = BSTNode(value)
+        if not self.root:
+            self.root = new_node
+            return
+
+        current = self.root
+        while True:
+            if value < current.value:
+                if current.left is None:
+                    current.left = new_node
+                    return
+                current = current.left
+            elif value == current.value:
+                print("Duplicate value detected")
+                return
+            else:
+                if current.right is None:
+                    current.right = new_node
+                    return
+                current = current.right
+
+    def delete(self, key):
+        parent = None
+        current = self.root
+
+        # Step 1: Find the node and its parent
+        while current and current.value != key:
+            parent = current
+            if key < current.value:
+                current = current.left
+            else:
+                current = current.right
+
+        if current is None:
+            print("Key not found")
+            return
+
+        # Step 2: Handle 3 cases
+
+        # Case 1: Node with two children
+        if current.left and current.right:
+            successor_parent = current
+            successor = current.right
+
+            # Find inorder successor (leftmost child of right subtree)
+            while successor.left:
+                successor_parent = successor
+                successor = successor.left
+
+            # Copy successor value to current
+            current.value = successor.value
+
+            # Now delete successor instead
+            current = successor
+            parent = successor_parent
+
+        # Case 2 and 3: Node has 0 or 1 child
+        child = current.left if current.left else current.right
+
+        if parent is None:
+            # Deleting the root node
+            self.root = child
+        elif parent.left == current:
+            parent.left = child
+        else:
+            parent.right = child
+
+    def inorder(self):
+        # Iterative inorder traversal
+        result = []
+        stack = []
+        current = self.root
+
+        while stack or current:
+            if current:
+                stack.append(current)
+                current = current.left
+            else:
+                current = stack.pop()
+                result.append(current.value)
+                current = current.right
+        return result

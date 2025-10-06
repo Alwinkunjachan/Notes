@@ -1,0 +1,58 @@
+
+Node (FreeCodeCamp)
+-----------------------------------------------
+Repl - just like console in browser we can use it to just run the code and test if it is working just like we do in case of console of a browser. We can activate it by running the command node in the terminal.
+Cli command - node file_name.
+Global variables : __dirname, __filename, module, require, process.
+Modules - By default every file in a node application is a module and if we want to access something from other module we need to export the smae form the file using module.exports and at the same time import the same using the require() syntax here we mention the file path from where the data to be imported.
+All the built in modules is available in the node documentation.
+When we use require to import a module at that time the code in the module is wrapped inside the require function and it gets executed the value of module.exports will be returned from the require function.
+os module (built in module) : This will give us the userInfo, System upTime etc..
+path module (built in module) : It has various useful function using which we can modify , get or generate the file paths.
+fs module (File system module) : readFileSync, writeFileSync, readFile, writeFile
+										(Synchronous)			(Asynchronous)
+Async and Sync
+npm
+npm init
+npm i packageName
+node modules
+node mon
+script
+dependencies
+devDependencies
+Event loops
+The callback function will be executed after the immediate code gets executed.
+HTTP module : Here the server will listen at a port and all the request that is coming to the url is returned with a response from the server.
+Async pattern : we can only use await inside a async function also after the await keyword should be followed by a promise object so it can wait until it gets resolved to continue to the next step.
+We can convert a normal function to a async function by returning a promise object from that function.
+We should use .then() if we need to access the data returning from a promise when we are not using await keyword. Incase of await the value is returned from the promise which we can directly assign to a variable and use it.
+utils module will give us the promisify function
+Event driven programming in nodejs.
+(readFileSync, writeFileSync, readFile, writeFile, createReadStream) can be imported from fs module
+Streams in node js
+HTTP : HyperText Transfer Protocol
+Server means a computer 
+Cloud means a bunch of computers working together
+Express is built in top of node and http module
+Every request should have a res.end() which indicate that the communication from the server is over.
+API (Application progamming interface), SSR (Server Side Rendering).
+Middleware
+Http
+get
+post we can send post request using a form by using action and method property.
+
+Node (Pro Academy)
+-----------------------------------------------
+REPL (Read, evaluate, print and loop)
+Get inputs from terminal
+Give outputs to terminal using 'readLine module'
+Reading and writing files using fs module in nodejs
+readFileSync
+writeFileSync
+readFile
+writeFile
+callback hell
+By default there is 4 background thread for a node js project. If we have more than 4 Asynchronous functions or operations then one thread should become free to execute the last Asynchronous operation
+We can create a Server using the http module : http.createServer(callbackFunction). This callback function will be get called every time a new request is send to the server.
+Without nodemon we need to restart the server every time after we make some changes in the code.
+

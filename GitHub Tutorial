@@ -1,0 +1,8 @@
+GitHub Tutorial
+--------------------
+Commands: 
+git init
+git add "fileName"
+git add .
+git commit -m "message"
+git log

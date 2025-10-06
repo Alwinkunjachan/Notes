@@ -1,0 +1,36 @@
+React
+------------
+React is a library
+To start or create react project we should run: npm create vite@latest
+Then we run : npm i
+To run the project we should run: npm run dev 
+npm and npx used to download and install various libraries
+We use upper camel casing to name the functions in a component file.
+componentName.module.css for a particular component.
+Import a css file in main.tsx file to make it available as global css file.
+useState hook
+passing prop as argument to a component
+map function
+To write js in html we should use {}
+useEffect with dependency array and without dependency array.
+useRef
+Fetch, await, async
+Loading icon
+response.json() and response.text()
+While using map function in html we give a key attribute to each element to remove the error from the console.
+State up and prop drilling
+useContext(VV IMP) , createContext, <contextName.Provider value = {}>
+Separate folder for : Pages, Context, Provider, hook and component.
+React Router Dom
+useParams()
+How to access query params
+useRef
+useNavigate : Used to go a route programatically
+fetch(url , {
+	method: 'POST',
+	body: JSON.Stringify(object),
+	header: {
+	"Content-Type": "application/json"
+	}
+})
+In the time of form submition we need to prevent its default behaviour. We should access eventObject during submition and run : e.preventDefault()

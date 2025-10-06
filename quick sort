@@ -1,0 +1,26 @@
+# Quick sort
+elements = [10,2,5,7,3,1,4]
+
+def partition(elements):
+	pivot_index = 0
+	pivot_value = elements[pivot_index]
+	start = pivot_index + 1
+	end = len(elements) - 1
+	while end >= start:
+	    if elements[start] > pivot_value:
+	        if elements[end] < pivot_value:
+	            temp = elements[end]
+	            elements[end] = elements[start]
+	            elements[start] = temp
+	        end -= 1
+	    start += 1
+    temp = elements[pivot_index]
+    elements[pivot_index] = elements[end]
+    elements[end] = temp
+    return elements
+	
+
+def quick_sort(elements):
+	print(partition(elements))
+
+print(quick_sort(elements))
