@@ -1,8 +1,23 @@
 GitHub Tutorial
 --------------------
-Commands: 
+git config user.name "name"
+git config user.email "email"
+
+For global
+-----------
+git config --global user.name "name"
+git config --global user.email "email"
+-----------
+git remote set-url origin <Generated Token>@github.com/Alwinkunjachan/Reponame.git (General local command for a repo)
+
+Essential Commands: 
+----------------------
 git init
 git add "fileName"
 git add .
 git commit -m "message"
+git push -u origin "BranchName"
 git log
+git checkout "commit-id"
+git checkout "BranchName"
+git checkout -b "BranchName"
