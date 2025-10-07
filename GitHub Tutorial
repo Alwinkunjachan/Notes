@@ -13,11 +13,37 @@ git remote set-url origin <Generated Token>@github.com/Alwinkunjachan/Reponame.g
 Essential Commands: 
 ----------------------
 git init
+git status
 git add "fileName"
 git add .
+git restore "FileName"
+git restore .
 git commit -m "message"
-git push -u origin "BranchName"
+git push -u origin "BranchName" (-u flag should be used only once which is the intial push)
 git log
 git checkout "commit-id"
 git checkout "BranchName"
 git checkout -b "BranchName"
+git branch
+git merge "BranchName"
+git reset --hard HEAD~2
+
+Stashing the changes
+----------------------
+# You're in the middle of something
+git status
+
+# You decide to stash it
+git stash push -m "Work in progress: footer fixes"
+
+# Do something else
+git checkout another-branch
+
+# Come back to your work
+git checkout main
+git stash list
+git stash apply stash@{0} To apply the specific stash from the list without removing it from the stash list
+git stash pop : To apply stash to the current repo and remove it from the stash list
+git stash apply : To apply the most recent stash from the list and this wont remove the stash from the list
+To clear the stash : git stash clear
+
