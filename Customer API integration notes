@@ -1,5 +1,0 @@
-AppConfigLoader {
-	domain: https://0north-test.eu.auth0.com,
-	customersDomain: https://api.private.test.zeronorth.app/customers-api,
-	
-}
